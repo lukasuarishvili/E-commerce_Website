@@ -18,56 +18,51 @@ import { productContext } from '../../App'
 
 function ProductInfo({ productData }) {
 
-    // productDatas for rendering 
-    let { price, desc, imgList, title, colorList, rate, reviews } = productData;
+    // change the Main state every time productData prop is changed
+    useEffect(() => {
+        setProduct(productData)
+    }, [productData]);
 
-    
+    // Main State for storing and manipulateing products data
+    let [product, setProduct] = useState(productData);
+
+    // State for keeping which img is pressed/vieued
+    const [selectedColorIndex, setSelectedColorIndex] = useState(0);
+
+    let [productCount, setproductCount] = useState(1);
+
+    let [uersSizes, setUsersSizes] = useState([])
+
+    // productDatas for rendering  this data is changeble by user 
+    let { price, desc, imgList, title, colorList, rate, reviews, sizeList } = product;
+
 
     //  states for adding the data to the contexts
     let { cartItems, setCartitems, chosenProduct, setChosenProduct } = useContext(productContext);
 
-    //  products States 
-    let [productCount, setProductCount] = useState(1);
-    let [productColor, setProductColor] = useState(colorList[0]);
-    let [productDesign, setProductDesign] = useState(imgList[0]);
 
+    function ChangeColor(index) {
+        setSelectedColorIndex(index);
 
-    // actual product data that changes
-    let [Test, setTest] = useState(productData)
-    
+    };
 
-    // useEffect so the productDesign changes every the imgList prop changes
-    useEffect(() => {
-        setProductDesign(imgList[1])
-    }, [imgList])
-
-
-    function ChangeColor(Color) {
-        setProductColor(Color)
-        console.log(productColor)
-    }
-
-    function ChangeDesign(img) {
-        setProductDesign(img)
-
-    }
-
-
-
-    rate = parseFloat(rate);
+    function ChangeDesign(index) {
+        setSelectedColorIndex(index);
+    };
 
 
     // stars logic
+    rate = parseFloat(rate);
     const stars = [];
 
     for (let i = 1; i <= Math.floor(rate); i++) {
-        stars.push(<img src={star} alt="star" className='w-7 h-7' />);
-    }
+        stars.push(<img src={star} alt="star" className='w-7 h-7' key={i} />);
+    };
 
     if (rate % 1 >= 0.5) {
-        stars.push(<img src={HalfStar} alt="halfstar" className='w-7 h-7' />);
+        stars.push(<img src={HalfStar} alt="halfstar" className='w-7 h-7' key="half" />);
 
-    }
+    };
 
     return (
         <>
@@ -86,11 +81,12 @@ function ProductInfo({ productData }) {
                                 imgList.map((img, index) =>
 
                                     img ?
-                                        <button onClick={() => {
-                                            ChangeDesign(img)
-                                        }}>
+                                        <button key={index} onClick={() => {
+                                            ChangeDesign(index)
+                                        }
+                                        }>
                                             <img
-                                                key={index}
+
                                                 src={img}
                                                 className="w-[111px] h-[106px] md:w-[152px] md:h-[167px]  rounded-[20px]"
                                             />
@@ -103,7 +99,7 @@ function ProductInfo({ productData }) {
 
                         {/* main big image */}
                         <div className=' h-auto '>
-                            <img src={productDesign} alt="main images" className='max-w-[444px] max-h-[530px]  min-w-full min-h-autp    rounded-[20px]' />
+                            <img src={imgList[selectedColorIndex]} alt="main images" className='max-w-[410px] max-h-[510px]  min-w-full min-h-autp    rounded-[20px]' />
                         </div>
 
                         {/* products info */}
@@ -111,6 +107,7 @@ function ProductInfo({ productData }) {
 
                             <h1 className=' md:text-[40px] lg:text-[40px] font-bold'>{title}</h1>
 
+                            {/* stars */}
                             <div className='flex flex-row gap-2 items-center'>
                                 <div className='flex'>
                                     {stars}
@@ -126,18 +123,22 @@ function ProductInfo({ productData }) {
                             <div className='flex flex-col border-t-[1px] border-gray-300 py-2.5 gap-3'>
                                 <h4 className='text-gray-500'>Select Colors</h4>
                                 <div className='flex gap-2 '>
-
                                     {
-                                        colorList.map((ColorElement) =>
-
-
-                                            <button className='p-2 text-white rounded-[50%] bg-green-200'
-                                                onClick={() => {
-                                                    ChangeColor(ColorElement)
-                                                }}
+                                        colorList.map((ColorElement, index) =>
+                                            <button
+                                                key={index}
+                                                className='p-2 text-white rounded-[50%] bg-green-200 border border-gray-700'
+                                                onClick={() => ChangeColor(index)}
                                                 style={{ backgroundColor: ColorElement }} >
-                                                <img src={Yes} alt="yes" className='w-4 h-4' />
+                                                {
+                                                    index == selectedColorIndex ?
+                                                        <img src={Yes} alt="yes" className='w-4 h-4' />
+                                                        :
+                                                        <div className='w-4 h-4'></div>
+
+                                                }
                                             </button>
+
                                         )
                                     }
 
@@ -146,21 +147,21 @@ function ProductInfo({ productData }) {
 
                             </div>
 
+                            {/*selecting  sizes */}
                             <div className='flex flex-col border-t-[1px] border-gray-300 py-2.5 gap-3 '>
                                 <h4 className='text-gray-500'>Choose Size</h4>
                                 <div className='flex gap-[12px] '>
-                                    <button className='px-[24px] py-[12px] rounded-[62px]   bg-[#b4b4b4] opacity-60 hover:bg-gray-900 hover:text-white'>
-                                        small
-                                    </button>
-                                    <button className='px-[24px] py-[12px] rounded-[62px]   bg-[#b4b4b4] opacity-60 hover:bg-gray-900 hover:text-white'>
-                                        Medium
-                                    </button>
-                                    <button className='px-[24px] py-[12px] rounded-[62px]   bg-[#b4b4b4] opacity-60 hover:bg-gray-900 hover:text-white'>
-                                        Large
-                                    </button>
-                                    <button className='px-[24px] py-[12px] rounded-[62px]   bg-[#b4b4b4] opacity-60 hover:bg-gray-900 hover:text-white'>
-                                        X-Large
-                                    </button>
+
+                                    {
+                                        sizeList.map((size, index) =>
+                                            <button
+                                                className='px-[24px] py-[12px] rounded-[62px]   bg-[#b4b4b4] opacity-60 hover:bg-gray-900 hover:text-white'
+                                                key={index}>
+                                                {size}
+                                            </button>
+
+                                        )
+                                    }
                                 </div>
 
                             </div>
@@ -171,14 +172,14 @@ function ProductInfo({ productData }) {
 
                                     <div className='min-w-fit flex py-4 px-5 gap-6 items-center  bg-[#b4b4b4] opacity-60 rounded-[62px]'>
 
-                                        <button onClick={() => { setProductCount(productCount - 1) }}>
+                                        <button onClick={() => { setproductCount(productCount - 1) }}>
                                             <img src={minus} alt="decrement" className='w-5 h-5' />
                                         </button>
 
                                         <p className='text-l'>{productCount}</p>
 
 
-                                        <button onClick={() => { setProductCount(productCount + 1) }}>
+                                        <button onClick={() => { setproductCount(productCount + 1) }}>
                                             <img src={plus} alt="increment" className='w-5 h-5' />
                                         </button>
                                     </div>
