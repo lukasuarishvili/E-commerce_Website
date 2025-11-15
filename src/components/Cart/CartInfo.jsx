@@ -24,11 +24,11 @@ function CartInfo({ data }) {
 
             <h4 className='text-[40px] font-extrabold '>Your cart</h4>
             <div className='w-full flex lg:flex-row  flex-wrap  gap-5' >
-                <div className='flex flex-col gap-2 rounded-[20px] border-gray-300 border-2 w-fitt max-w-[715px]'>
+                <div className='flex flex-col gap-2 rounded-[20px] border-gray-300 border-2 w-fit max-w-[715px]'>
 
                     {
-                        data.map((item) =>
-                            <CartItem item={item}></CartItem>
+                        data.map((item , index) =>
+                            <CartItem item={item} index={index}></CartItem>
                         )
                     }
 
