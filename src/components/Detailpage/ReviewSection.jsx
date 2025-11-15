@@ -7,10 +7,10 @@ import down_arrow from "../../assets/down_arrow.png";
 
 function ReviewSection({ reviews }) {
 
-    if ( reviews.length === 0) {
-        <>
-            <h1>no reviews</h1>
-        </>
+    if (reviews.length === 0) {
+
+        return <h1  className='text-center text-2xl text-black font-bold'>no reviews</h1>
+
     }
 
     return (

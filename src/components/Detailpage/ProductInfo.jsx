@@ -1,5 +1,5 @@
-import React, { useContext, useEffect } from 'react'
-import { useState } from 'react'
+import React, { useState, useContext, useEffect } from 'react'
+import { Link } from 'react-router-dom'
 
 // images
 import star from '../../assets/star.png'
@@ -18,23 +18,15 @@ import { productContext } from '../../App'
 
 function ProductInfo({ productData }) {
 
-    // change the Main state every time productData prop is changed
-    useEffect(() => {
-        setProduct(productData)
-    }, [productData]);
-
-    // Main State for storing and manipulateing products data
-    let [product, setProduct] = useState(productData);
+    // destructuring productData / this data is not changable by user
+    let { price, desc, imgList, title, colorList, rate, reviews, sizeList } = productData;
 
     // State for keeping which img is pressed/vieued
     const [selectedColorIndex, setSelectedColorIndex] = useState(0);
-
+    const [selectedSize, setSelectedSize] = useState(null);
     let [productCount, setproductCount] = useState(1);
 
-    let [uersSizes, setUsersSizes] = useState([])
 
-    // productDatas for rendering  this data is changeble by user 
-    let { price, desc, imgList, title, colorList, rate, reviews, sizeList } = product;
 
 
     //  states for adding the data to the contexts
@@ -49,6 +41,15 @@ function ProductInfo({ productData }) {
     function ChangeDesign(index) {
         setSelectedColorIndex(index);
     };
+
+    // the finished object that will be added to the cart
+
+    let usersProduct = {
+        ...productData,
+        Userssize: selectedSize,
+        productsCount: productCount,
+        usersDesign: selectedColorIndex
+    }
 
 
     // stars logic
@@ -154,11 +155,21 @@ function ProductInfo({ productData }) {
 
                                     {
                                         sizeList.map((size, index) =>
-                                            <button
-                                                className='px-[24px] py-[12px] rounded-[62px]   bg-[#b4b4b4] opacity-60 hover:bg-gray-900 hover:text-white'
-                                                key={index}>
-                                                {size}
-                                            </button>
+                                            selectedSize == size ?
+                                                <button
+                                                    className='px-[24px] py-[12px] rounded-[62px]   bg-gray-900 opacity-60 hover:bg-gray-900 text-white'
+                                                    key={index}
+                                                    onClick={() => { setSelectedSize(size) }}>
+                                                    {size}
+                                                </button>
+                                                :
+                                                <button
+                                                    className='px-[24px] py-[12px] rounded-[62px]   bg-[#b4b4b4] opacity-60 hover:bg-gray-900 hover:text-white'
+                                                    key={index}
+                                                    onClick={() => { setSelectedSize(size) }}>
+                                                    {size}
+                                                </button>
+
 
                                         )
                                     }
@@ -172,7 +183,7 @@ function ProductInfo({ productData }) {
 
                                     <div className='min-w-fit flex py-4 px-5 gap-6 items-center  bg-[#b4b4b4] opacity-60 rounded-[62px]'>
 
-                                        <button onClick={() => { setproductCount(productCount - 1) }}>
+                                        <button onClick={() => { setproductCount(Math.max(1, productCount - 1)) }}>
                                             <img src={minus} alt="decrement" className='w-5 h-5' />
                                         </button>
 
@@ -183,15 +194,14 @@ function ProductInfo({ productData }) {
                                             <img src={plus} alt="increment" className='w-5 h-5' />
                                         </button>
                                     </div>
-
-                                    <button className='bg-black text-white py-4 px-[54px] rounded-[62px] w-full hover:bg-gray-700 '
-                                        onClick={() => {
-                                            setCartitems([...cartItems, chosenProduct]);
-                                            console.log(chosenProduct)
-
-                                        }}>
-                                        Add to Cart
-                                    </button>
+                                    <Link to="/Cart">
+                                        <button className='bg-black text-white py-4 px-[54px] rounded-[62px] w-full hover:bg-gray-700 '
+                                            onClick={() => {
+                                                setCartitems([...cartItems, usersProduct]);
+                                            }}>
+                                            Add to Cart
+                                        </button>
+                                    </Link>
                                 </div>
                             </div>
                         </div>
