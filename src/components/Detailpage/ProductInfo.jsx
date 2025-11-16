@@ -89,7 +89,7 @@ function ProductInfo({ productData }) {
                                             <img
 
                                                 src={img}
-                                                className="w-[111px] h-[106px] md:w-[152px] md:h-[167px]  rounded-[20px]"
+                                                className=" cursor-pointer w-[111px] h-[106px] md:w-[152px] md:h-[167px]  rounded-[20px]"
                                             />
                                         </button> : null
 
@@ -99,7 +99,7 @@ function ProductInfo({ productData }) {
                         </div>
 
                         {/* main big image */}
-                        <div className=' h-auto '>
+                        <div className=' h-auto  '>
                             <img src={imgList[selectedColorIndex]} alt="main images" className='max-w-[410px] max-h-[510px]  min-w-full min-h-autp    rounded-[20px]' />
                         </div>
 
@@ -128,7 +128,7 @@ function ProductInfo({ productData }) {
                                         colorList.map((ColorElement, index) =>
                                             <button
                                                 key={index}
-                                                className='p-2 text-white rounded-[50%] bg-green-200 border border-gray-700'
+                                                className='p-2 text-white rounded-[50%] bg-green-200 border border-gray-700 cursor-pointer'
                                                 onClick={() => ChangeColor(index)}
                                                 style={{ backgroundColor: ColorElement }} >
                                                 {
@@ -157,14 +157,14 @@ function ProductInfo({ productData }) {
                                         sizeList.map((size, index) =>
                                             selectedSize == size ?
                                                 <button
-                                                    className='px-[24px] py-[12px] rounded-[62px]   bg-gray-900 opacity-60 hover:bg-gray-900 text-white'
+                                                    className='px-[24px] py-[12px] rounded-[62px]   bg-gray-900 opacity-60 hover:bg-gray-900 text-white cursor-pointer'
                                                     key={index}
                                                     onClick={() => { setSelectedSize(size) }}>
                                                     {size}
                                                 </button>
                                                 :
                                                 <button
-                                                    className='px-[24px] py-[12px] rounded-[62px]   bg-[#b4b4b4] opacity-60 hover:bg-gray-900 hover:text-white'
+                                                    className='px-[24px] py-[12px] rounded-[62px]   bg-[#b4b4b4] opacity-60 hover:bg-gray-900 hover:text-white cursor-pointer'
                                                     key={index}
                                                     onClick={() => { setSelectedSize(size) }}>
                                                     {size}
@@ -184,18 +184,18 @@ function ProductInfo({ productData }) {
                                     <div className='min-w-fit flex py-4 px-5 gap-6 items-center  bg-[#b4b4b4] opacity-60 rounded-[62px]'>
 
                                         <button onClick={() => { setproductCount(Math.max(1, productCount - 1)) }}>
-                                            <img src={minus} alt="decrement" className='w-5 h-5' />
+                                            <img src={minus} alt="decrement" className='w-5 h-5 cursor-pointer' />
                                         </button>
 
                                         <p className='text-l'>{productCount}</p>
 
 
                                         <button onClick={() => { setproductCount(productCount + 1) }}>
-                                            <img src={plus} alt="increment" className='w-5 h-5' />
+                                            <img src={plus} alt="increment" className='w-5 h-5 cursor-pointer' />
                                         </button>
                                     </div>
                                     <Link to="/Cart">
-                                        <button className='bg-black text-white py-4 px-[54px] rounded-[62px] w-full hover:bg-gray-700 '
+                                        <button className='bg-black text-white py-4 px-[54px] rounded-[62px] w-full hover:bg-gray-700 cursor-pointer'
                                             onClick={() => {
                                                 setCartitems([...cartItems, usersProduct]);
                                             }}>

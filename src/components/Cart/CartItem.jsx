@@ -23,14 +23,13 @@ export default function CartItem({ item, index }) {
 
     return (
         <div className="flex flex-row gap-8 p-3  w-full  border-t-[1px] border-gray-300  border-none  lg:max-w-[667px]" >
-            <div className={`flex flex-row gap-3 `}>
-                <div className='w-[124px] h-[124px]'>
+            <div className="flex flex-row gap-3 ">
+                <div className='w-[124px] h-[124px] '>
                     {
                         usersDesign ?
-                            <img src={imgList[usersDesign]} alt="tshirt" className='w-full h-full' />
+                            <img src={imgList[usersDesign]} alt="tshirt" className='w-full h-full rounded-[9px]' />
                             :
-                            <img src={imgList[0]} alt="tshirt" className='w-full h-full' />
-
+                            <img src={imgList[0]} alt="tshirt" className='w-full h-full rounded-[9px]' />
                     }
 
                 </div>
@@ -52,30 +51,28 @@ export default function CartItem({ item, index }) {
             <div className='max-w-full flex flex-col justify-between items-end '>
                 <div className='w-6 h-6'>
                     <button
-                        onClick={() => {
-                            setCartitems(cartItems.splice(index+1)
-                            )
-                        }}>
-                    <img src={trash} alt="trash" className='w-full h-full' />
-                </button>
+                        // ❓⁉️
+                        onClick={() => { }}>
+                        <img src={trash} alt="trash" className='w-full h-full' />
+                    </button>
 
+                </div>
+
+                <div className='flex gap-5 items-center rounded-3xl bg-gray-200 px-3.5 py-2.5'>
+                    <button
+                        className='w-5 h-5'
+                        onClick={() => { setcartproductsCount(cartproductsCount - 1) }}>
+                        <img src={minus} alt="plus" className='w-full h-full' />
+                    </button>
+                    <h4>{cartproductsCount}</h4>
+
+                    <button
+                        className='w-5 h-5'
+                        onClick={() => { setcartproductsCount(cartproductsCount + 1) }}>
+                        <img src={plus} alt="minus" className='w-full h-full' />
+                    </button>
+                </div>
             </div>
-
-            <div className='flex gap-5 items-center rounded-3xl bg-gray-200 px-3.5 py-2.5'>
-                <button
-                    className='w-5 h-5'
-                    onClick={() => { setcartproductsCount(cartproductsCount - 1) }}>
-                    <img src={minus} alt="plus" className='w-full h-full' />
-                </button>
-                <h4>{cartproductsCount}</h4>
-
-                <button
-                    className='w-5 h-5'
-                    onClick={() => { setcartproductsCount(cartproductsCount + 1) }}>
-                    <img src={plus} alt="minus" className='w-full h-full' />
-                </button>
-            </div>
-        </div>
         </div >
     )
 }
