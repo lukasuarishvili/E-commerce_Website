@@ -1,5 +1,4 @@
-import React from 'react'
-import { useState, useEffect, } from 'react'
+import { useState, useEffect, useContext } from 'react'
 
 // images
 import down_arrow from '../../assets/down_arrow.png'
@@ -7,25 +6,13 @@ import down_arrow from '../../assets/down_arrow.png'
 // components
 import Item from '../Global/Item';
 
+// context
+import { productContext } from '../../App';
 
 
 function Products() {
 
-    let [allProducts, setallProducts] = useState();
-
-    useEffect(() => {
-
-        async function getData() {
-            let res = await fetch("/data.json");
-            let data = await res.json()
-            setallProducts(data)
-        };
-
-
-        getData()
-
-    }, [])
-
+    let { filterItems } = useContext(productContext);
 
 
 
@@ -44,8 +31,8 @@ function Products() {
                 </div>
 
                 <div className='w-fit grid  grid-rows-3 grid-cols-3 gap-2'>
-                    {allProducts ?
-                        allProducts.map((productinfo, index) =>
+                    {filterItems ?
+                        filterItems.map((productinfo, index) =>
                             <Item key={index} item={productinfo} />
                         ) : null
                     }
@@ -62,7 +49,7 @@ function Products() {
                     </div>
 
                     <button>
-                        
+
                     </button>
                 </div>
             </section>

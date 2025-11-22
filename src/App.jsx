@@ -1,6 +1,5 @@
-import { useState, useEffect, useContext, createContext } from "react";
-import { BrowserRouter, Route, Routes, Link } from "react-router-dom";
-
+import { useState, createContext, useEffect } from "react";
+import { BrowserRouter, Route, Routes, } from "react-router-dom";
 
 
 // pages
@@ -9,11 +8,20 @@ import ProductDetailPages from './pages/ProductDetailPage'
 import Cart from "./pages/Cart";
 import CategoryPage from "./pages/CategoryPage";
 
+
 // context
 export let productContext = createContext();
 
-
 function App() {
+
+  useEffect(() => {
+    async function getData() {
+      let res = await fetch("/data.json");
+      let data = await res.json();
+      setFilterItems(data);
+    }
+    getData()
+  }, [])
 
   let [chosenProduct, setChosenProduct] = useState(
     {
@@ -57,11 +65,17 @@ function App() {
       "id": 2
     });
 
+
+  // Carts data that hols users added items 
   let [cartItems, setCartitems] = useState([])
+
+  // filter Data  holds what will be shown on screen after user filters it 
+  let [filterItems, setFilterItems] = useState()
+
 
   return (
     <>
-      <productContext.Provider value={{ chosenProduct, setChosenProduct, cartItems, setCartitems }}>
+      <productContext.Provider value={{ chosenProduct, setChosenProduct, cartItems, setCartitems ,filterItems , setFilterItems }}>
         <BrowserRouter>
           <Routes>
             <Route index path="/" element={<HomePage />} />
@@ -74,5 +88,5 @@ function App() {
     </>
   );
 }
-  
+
 export default App;
