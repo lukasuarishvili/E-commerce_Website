@@ -1,4 +1,4 @@
-import React, { useContext, useState } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 
 // images
 import tshirt from '../../assets/tshirt.png'
@@ -19,7 +19,9 @@ export default function CartItem({ item, index }) {
 
     let [cartproductsCount, setcartproductsCount] = useState(productsCount);
 
-
+    useEffect(() => {
+        setCartitems(cartItems[index].price = cartproductsCount * productsCount)
+    }, [cartproductsCount])
 
     return (
         <div className="flex flex-row gap-8 p-3  w-full  border-t-[1px] border-gray-300  border-none  lg:max-w-[667px]" >

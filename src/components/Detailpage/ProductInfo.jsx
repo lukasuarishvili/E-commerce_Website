@@ -116,7 +116,7 @@ function ProductInfo({ productData }) {
                                 <p className='text-gray-500 text-lg'>{rate}</p>
                             </div>
 
-                            <h3 className='text-[32px] font-bold'>{price}</h3>
+                            <h3 className='text-[32px] font-bold'>$ {price*productCount}</h3>
 
                             <p className='text-gray-500 text-[16px] mb-2'>{desc}</p>
 

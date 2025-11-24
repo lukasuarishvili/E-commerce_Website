@@ -1,16 +1,46 @@
-import React from 'react'
-
+import React, { useState, useEffect, useContext } from 'react'
+import { productContext } from '../../App'
 // images
 import toggle from '../../assets/toggle.png'
 import down_arrow from '../../assets/down_arrow.png'
 import Detelthis from '../../assets/Testinput.png'
 
 
+
 function Filter() {
+
+    const [data, setData] = useState([])
+
+    const { filterItems, setFilterItems } = useContext(productContext);
+
+    const [filters, setFilters] = useState({
+        price: [0, 100000],
+        dressStyle: [],
+        clothesType: [],
+        colorList: [],
+        size: "",
+    });
+
+    // gives the data state its data
+    useEffect(() => {
+        async function getData() {
+            let res = await fetch("/data.json");
+            let data = await res.json();
+            setData(data)
+
+        }
+        getData()
+    }, [])
+
+
+
 
     const clothstype = ["T-shirts", "Shorts", "Shirts", "Hoodie", "Jeans"];
     const clothsColors = ['red', 'orange', 'yellow', 'green', 'blue', 'indigo', 'violet', 'pink', "black", "white"];
     const clothssizes = ["XX-Small", "X-Small", "Small", "Medium", "Large", "X-Large", "XX-Large", "3X-Large", "4X-Large"]
+
+
+
 
 
     return (
@@ -28,17 +58,27 @@ function Filter() {
 
             {/* claoths type */}
             <div className='w-full border-b border-b-gray-400 '>
-                {
-                    clothstype.map((type, index) =>
+                <ul className="flex flex-col ">
+                    {clothstype.map((el, ind) => (
+                        <div className='w-full flex items-center justify-between py-2' key={ind}>
+                            <div className={`cursor-pointer duration-200 hover:text-[#000000be] ${filters.clothesType == el
+                                ? "text-black font-[600]" : "text-[#00000099]"}`}
 
-                        <div className='w-full flex items-center justify-between py-2' key={index}>
-                            <h4 className='text-gray-500'>{type}</h4>
+                                onClick={() =>
+                                    el == filters.clothesType
+                                        ? setFilters({ ...filters, clothesType: "" })
+                                        : setFilters({ ...filters, clothesType: el })
+                                }
+                            >
+                                {el}
+                            </div>
                             <div>
                                 <img src={down_arrow} alt="down_arrow" className='w-4 h-4 cursor-pointer' />
                             </div>
                         </div>
                     )
-                }
+                    )}
+                </ul>
             </div>
 
             {/* Price input */}
@@ -95,11 +135,6 @@ function Filter() {
                     }
                 </div>
             </div>
-
-
-
-
-            
         </div>
     )
 }

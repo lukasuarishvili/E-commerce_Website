@@ -1,8 +1,13 @@
 import React from 'react'
 import CartItem from './CartItem'
+
+import { useContext, useEffect, useState } from 'react';
+import { productContext } from '../../App';
+
+
+
 // images
 import tshirt from '../../assets/tshirt.png'
-
 import pantt from '../../assets/CLOTH1.png'
 import pantts from '../../assets/CLOTH2.png'
 import trash from '../../assets/trash.png'
@@ -10,14 +15,35 @@ import plus from '../../assets/plus.png'
 import minus from '../../assets/minus.png'
 import promo from '../../assets/promo.png'
 
-function CartInfo({ data }) {
+function CartInfo() {
 
-    if ( data.length === 0) {
+
+    let { cartItems } = useContext(productContext);
+
+    if (cartItems.length === 0) {
         return <p className="text-center text-4xl font-bold font-roboto py-4"> cart is empty </p>;
     }
 
+    let [Subtotal, setSubTotal] = useState(null);
 
-    console.log(data)
+
+
+    useEffect(() => {
+        let Total = 0
+
+        cartItems.forEach(element => {
+            Total = Total + element.price
+            console.log(element.price)
+        });
+
+        setSubTotal(Total)
+        console.log(Total)
+    }, [cartItems])
+
+
+
+
+
     return (
         <section className='w-full mx-auto px-2 md:px-10 lg:px-20 py-5 pb-12  flex flex-col  gap-3 '>
             <h5 className=' pt-4 border-t-2 border-gray-400'>{"Home > Cart"}</h5>
@@ -26,12 +52,12 @@ function CartInfo({ data }) {
             <div className='w-full flex lg:flex-row  flex-wrap  gap-5' >
                 <div className='flex flex-col gap-2 rounded-[20px] border-gray-300 border-2 w-fit max-w-[715px]'>
 
-                    {
-                        data.map((item , index) =>
-                            <CartItem item={item} index={index}></CartItem>
-                        )
-                    }
+                    {cartItems ?
 
+                        cartItems.map((item, index) =>
+                            <CartItem item={item} index={index}></CartItem>
+                        ) : <h1>cart is empty</h1
+                    }
 
                 </div>
 
@@ -39,7 +65,7 @@ function CartInfo({ data }) {
                     <h5>Order Summary</h5>
                     <div className='w-full flex justify-between  gap-18 items-center'>
                         <p className='text-[20px]'>Subtotal</p>
-                        <h6 className="text-[20px] font-bold"> $565</h6>
+                        <h6 className="text-[20px] font-bold">{Subtotal}</h6>
                     </div>
 
                     <div className='w-full flex justify-between items-center'>
