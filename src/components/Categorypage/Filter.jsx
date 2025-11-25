@@ -59,25 +59,7 @@ function Filter() {
             {/* claoths type */}
             <div className='w-full border-b border-b-gray-400 '>
                 <ul className="flex flex-col ">
-                    {clothstype.map((el, ind) => (
-                        <div className='w-full flex items-center justify-between py-2' key={ind}>
-                            <div className={`cursor-pointer duration-200 hover:text-[#000000be] ${filters.clothesType == el
-                                ? "text-black font-[600]" : "text-[#00000099]"}`}
-
-                                onClick={() =>
-                                    el == filters.clothesType
-                                        ? setFilters({ ...filters, clothesType: "" })
-                                        : setFilters({ ...filters, clothesType: el })
-                                }
-                            >
-                                {el}
-                            </div>
-                            <div>
-                                <img src={down_arrow} alt="down_arrow" className='w-4 h-4 cursor-pointer' />
-                            </div>
-                        </div>
-                    )
-                    )}
+                    
                 </ul>
             </div>
 
