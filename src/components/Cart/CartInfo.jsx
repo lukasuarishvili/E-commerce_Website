@@ -28,17 +28,17 @@ function CartInfo() {
 
 
 
-    useEffect(() => {
-        let Total = 0
+    // useEffect(() => {
+    //     let Total = 0
 
-        cartItems.forEach(element => {
-            Total = Total + element.price
-            console.log(element.price)
-        });
+    //     cartItems.forEach(element => {
+    //         Total = Total + element.price
+    //         console.log(element.price)
+    //     });
 
-        setSubTotal(Total)
-        console.log(Total)
-    }, [cartItems])
+    //     setSubTotal(Total)
+    // }, [cartItems])
+
 
 
 
@@ -52,11 +52,13 @@ function CartInfo() {
             <div className='w-full flex lg:flex-row  flex-wrap  gap-5' >
                 <div className='flex flex-col gap-2 rounded-[20px] border-gray-300 border-2 w-fit max-w-[715px]'>
 
-                    {cartItems ?
+                    {cartItems &&
+
 
                         cartItems.map((item, index) =>
-                            <CartItem item={item} index={index}></CartItem>
-                        ) : <h1>cart is empty</h1
+                        (
+                            <CartItem key={index} item={item} index={index} />
+                        ))
                     }
 
                 </div>
