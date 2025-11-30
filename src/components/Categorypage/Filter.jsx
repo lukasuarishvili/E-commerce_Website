@@ -40,7 +40,7 @@ function Filter() {
     const clothssizes = ["XX-Small", "X-Small", "Small", "Medium", "Large", "X-Large", "XX-Large", "3X-Large", "4X-Large"]
 
 
-
+    
 
 
     return (
@@ -59,11 +59,23 @@ function Filter() {
             {/* claoths type */}
             <div className='w-full border-b border-b-gray-400 '>
                 <ul className="flex flex-col ">
-                    
+                    {
+                        clothstype.map((el, ind) =>
+                            <div className='w-full flex items-center justify-between py-2' key={ind}>
+                                <div className={`cursor-pointer duration-200 hover:text-[#000000be]  "text-black font-[600]" : "text-[#00000099]"}`}>
+                                    {el}
+                                </div>
+                                <div>
+                                    <img src={down_arrow} alt="down_arrow" className='w-4 h-4 cursor-pointer' />
+                                </div>
+                            </div>
+                        )
+                    }
                 </ul>
             </div>
 
             {/* Price input */}
+            {/* for later */}
             <div className='w-full flex flex-col gap-2 py-2  border-b border-b-gray-400'>
                 <div className='w-full flex items-center justify-between py-2'>
                     <h4 className='text-[20px] font-bold '>Price</h4>
@@ -78,7 +90,6 @@ function Filter() {
             </div>
 
             {/* clothsColors */}
-
             <div className='w-full flex flex-col gap-2 py-2  border-b border-b-gray-400'>
                 <div className='w-full flex items-center justify-between py-2'>
                     <h4 className='text-[20px] font-bold '>Colors</h4>
@@ -90,6 +101,7 @@ function Filter() {
                 <div className='w-full flex flex-wrap gap-2.5'>
                     {
                         clothsColors.map((color, index) =>
+
                             <div key={index} className='min-h-9 min-w-9 border border-gray-500 hover:grayscale-25 rounded-[50%] cursor-pointer' style={{ backgroundColor: color }}>
 
                             </div>
