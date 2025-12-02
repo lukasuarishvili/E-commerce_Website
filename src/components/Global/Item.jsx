@@ -28,12 +28,14 @@ function Item({ item }) {
 
 
     return (
-        <div className='min-w-max flex flex-col  px-1 py-1 gap-1'>
-            <div className='max-w[295px] h-[298px]'>
-                <img src={imgList[0]} alt="item image" className="  lg:w-[295px] h-full w-full rounded-[20px] object-cover" />
+        <div className='min-w-[295px] flex flex-col  px-1 py-1 gap-1'>
+            <div className='max-w-[295px] h-[298px]'>
+                <img src={imgList[0]} alt="item image" className="  w-full h-full rounded-[20px] object-cover" />
             </div>
 
-            <h5 className='text-xl font-bold'>{title}</h5>
+            <h5 className='text-xl font-bold '>{title}</h5>
+
+
             <div className='flex justify-start items-center gap-2'>
                 {stars}
                 <p className='text-gray-500 text-sm'>{rate}/5</p>

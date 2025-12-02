@@ -1,5 +1,6 @@
 import { useState, useEffect, useContext } from 'react'
 
+import { Link } from 'react-router-dom';
 // images
 import down_arrow from '../../assets/down_arrow.png'
 
@@ -12,7 +13,7 @@ import { productContext } from '../../App';
 
 function Products() {
 
-    let { filterItems } = useContext(productContext);
+    let { filterItems, setChosenProduct } = useContext(productContext);
 
 
 
@@ -31,10 +32,20 @@ function Products() {
                 </div>
 
                 <div className='w-fit grid  grid-rows-3 grid-cols-3 gap-2'>
-                    {filterItems ?
+                    {filterItems &&
                         filterItems.map((productinfo, index) =>
-                            <Item key={index} item={productinfo} />
-                        ) : null
+                            <Link
+                                to="/product"
+                                key={index}
+                                onClick={(e) => { 
+                                    setChosenProduct(productinfo)
+                                  
+                                 }}
+                            >
+                                <Item item={productinfo} />
+                            </Link>
+
+                        )
                     }
                 </div>
 

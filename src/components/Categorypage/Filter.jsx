@@ -14,7 +14,7 @@ function Filter() {
 
     const [data, setData] = useState([])
 
-    const { filterItems, setFilterItems } = useContext(productContext);
+    const {  setFilterItems } = useContext(productContext);
 
     const [filters, setFilters] = useState({
         price: [0, 100000],
@@ -62,6 +62,76 @@ function Filter() {
     }
 
 
+    function getFilteredRender() {
+
+        let final = [];
+        if (data.length > 0) {
+            if (filters.clothesType.length > 0) {
+                for (let i of data) {
+                    if (i.clothesType === filters.clothesType) {
+                        final.push(i);
+                    }
+                }
+            } else {
+                for (let i of data) {
+                    final.push(i);
+                }
+            }
+        }
+
+        let final2 = [];
+
+        if (final.length > 0) {
+            if (filters.colorList.length > 0) {
+                for (let item of final) {
+                    const matchedColorIndex = item.colorList.findIndex(color =>
+                        filters.colorList.includes(color)
+                    );
+
+                    if (matchedColorIndex !== -1) {
+                        const selectedImg = item.imgList[matchedColorIndex];
+                        final2.push({ ...item, selectedImg });
+                    }
+                }
+            } else {
+                final2 = [...final];
+            }
+        }
+
+
+        let final3 = [];
+        if (final2.length > 0) {
+            if (filters.size.length > 0) {
+                for (let item of final2) {
+                    if (item.sizeList.includes(filters.size)) {
+                        final3.push(item);
+                    }
+                }
+            } else {
+                for (let i of final2) {
+                    final3.push(i);
+                }
+            }
+        }
+
+        let final4 = [];
+        if (final3.length > 0) {
+            if (filters.dressStyle.length > 0) {
+                for (let item of final3) {
+                    if (item.dressStyle === filters.dressStyle) {
+                        final4.push(item);
+                    }
+                }
+            } else {
+                for (let i of final3) {
+                    final4.push(i);
+                }
+            }
+        }
+
+        setFilterItems(final4);
+    }
+
     // gives the data state its data
     useEffect(() => {
         async function getData() {
@@ -71,9 +141,14 @@ function Filter() {
 
         }
         getData()
+        setFilterItems(data);
+
     }, [])
 
 
+    useEffect(() => {
+        getFilteredRender()
+    }, [filters])
 
 
     const clothstype = ["T-shirts", "Shorts", "Shirts", "Hoodie", "Jeans"];
@@ -179,8 +254,8 @@ function Filter() {
                     </button>
                 </div>
 
-               <div className={`flex gap-2 flex-wrap overflow-y-hidden ${!showingSize ? "max-h-[80px]" : "max-h-[350px]"} duration-300`}>
-                    
+                <div className={`flex gap-2 flex-wrap overflow-y-hidden ${!showingSize ? "max-h-[80px]" : "max-h-[350px]"} duration-300`}>
+
                     {
                         getEverySize().map((el, index) =>
                             <div
