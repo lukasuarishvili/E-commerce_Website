@@ -20,7 +20,7 @@ export default function
 
             <CategoryHeader/>
 
-            <section className='w-full h-full flex gap-15 px-20 items-start '>
+            <section className='w-full h-full flex gap-15 px-15 items-start '>
                 <Filter/>
                 <Products />
             </section>

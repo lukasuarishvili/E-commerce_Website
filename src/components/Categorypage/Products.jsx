@@ -23,7 +23,7 @@ function Products() {
 
                 <div className='w-full flex justify-between '>
                     <h2 className='text-[32px] font-bold '>Casual</h2>
-                    <div className='flex gap-1 items-center'>
+                    <div className=' gap-1 items-center hidden lg:flex '>
                         <p className='text-gray-800'>Showing 1-10 of 100 Products Sort by: <em className='font-bold '> Most Popular</em> </p>
                         <img src={down_arrow} alt="down_arrow" className='w-4 h-4' />
                     </div>
@@ -31,7 +31,7 @@ function Products() {
 
                 </div>
 
-                <div className='w-fit grid  grid-rows-3 grid-cols-3 gap-2'>
+                <div className='w-fit flex flex-wrap gap-2'>
                     {filterItems &&
                         filterItems.map((productinfo, index) =>
                             <Link
